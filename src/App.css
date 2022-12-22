@@ -1,0 +1,61 @@
+:root {
+  --font-princial: 'Rubik',Helvetica,Arial,Lucida,sans-serif;
+  --font-secundaria: 'Rubik',Helvetica,Arial,Lucida,sans-serif;
+
+  --color-principal: #003eaa;
+  --color-secundario: #FFF;
+  --color-terciario: #ff6900;
+
+  --negro: #000;
+  --blanco: #fff;
+  --gris: #ccc;
+}
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+  box-sizing: border-box;
+  color: var(--color-principal);
+  background-color: var(--color-secundario-);
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: var(--font-principal);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: var(--color-principal);
+  background-color: var(--color-secundario);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 2rem 0;
+  line-height: 1.5;
+}
+h1,
+h2 {
+  text-align: center;
+  font-family: var(--font-secundaria);
+  font-weight: 700;
+}
+h3 {
+  font-family: var(--font-secundaria);
+}
+h1 {
+  font-size: 4rem;
+}
+h2 {
+  font-size: 3.5rem;
+}
+h3 {
+  font-size: 2.5rem;
+}
+p {
+  margin: 0 0 2rem 0;
+}
+a {
+  text-decoration: none;
+}
