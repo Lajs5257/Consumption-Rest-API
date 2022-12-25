@@ -1,8 +1,9 @@
 .search {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
+        "alert"
         "title"
         "search"
         "search"
@@ -39,7 +40,6 @@
 }
 .submit {
     grid-area: submit;
-    justify-self: center;
     color: var(--color-principal);
-    background-color: var(--color-terciario);
+    background-color: var(--color-terciario);   
 }

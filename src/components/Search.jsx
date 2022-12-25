@@ -1,43 +1,154 @@
+import { useState } from "react";
+import axios from "axios";
+import Alerta from "./Alerta";
+import clienteAxios from "../config/clienteAxios";
+
 import "../styles/Search.css";
 const Search = () => {
+  const [alerta, setAlerta] = useState({});
+
+  const [token, setToken] = useState(import.meta.env.VITE_TOKEN);
+  const [shipment, setShipment] = useState(import.meta.env.VITE_SHIPMENT);
+  const [fechaInicial, setFechaInicial] = useState(
+    import.meta.env.VITE_FH_START
+  );
+  const [fechaFinal, setFechaFinal] = useState(import.meta.env.VITE_FH_END);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([token, shipment, fechaInicial, fechaFinal].includes("")) {
+      setAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      return;
+    }
+    try {
+      const options = {
+        method: "POST",
+        body: `{"token":${token},
+        "fh_start":${fechaInicial},
+        "fh_end":${fechaFinal}},
+        "shipment":${shipment}}`,
+      };
+
+      const data = fetch(
+        import.meta.env.VITE_BACKEND_URL+"/jsonapi/get_tracking_info_rest_service_std_test",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err));
+      /* code dont work by the cors policy
+      const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        url: '',
+        data: {
+          token: '',
+          fh_start: '',
+          fh_end: '',
+          shipment: ''
+        }
+      };
+      
+      axios.request(options).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.error(error);
+      });*/
+
+      /*const { data } = clienteAxios.post(
+        "/get_tracking_info_rest_service_std_test",
+        {
+          token:
+            token,
+          fh_start: fechaInicial,
+          fh_end: fechaFinal,
+          shipment: shipment,
+        }
+      ).then(response => {
+        console.log('successful signup')
+        console.log(response);
+ 
+  }).catch(error => {
+        console.log('Sign up server error: ')
+        console.log(error);
+  });*/
+      console.log(data);
+      setAlerta({});
+      
+      localStorage.setItem("data", JSON.stringify(data));
+      //setAuth(data)
+      //navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+      setAlerta({
+        msg: error.response.data,
+        error: true,
+      });
+    }
+  };
+  const { msg } = alerta;
+  console.log(msg);
   return (
-    <form className="search">
-      <h3 className="title">Consultar historial de rastreo</h3>
+    <>
+      <form onSubmit={handleSubmit}>
+        {msg && <Alerta alerta={alerta} />}
 
-      <div className="form-group">
-        <label>Token</label>
-        <input type="text" className="form-control" placeholder="Token" />
-      </div>
+        <div className="search">
+          <h3 className="title">Consultar historial de rastreo</h3>
+          <div className="form-group">
+            <label>Token</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Token"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+            />
+          </div>
 
-      <div className="form-group">
-        <label>Shipment</label>
-        <input type="text" className="form-control" placeholder="Shipment" />
-      </div>
+          <div className="form-group">
+            <label>Shipment</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Shipment"
+              value={shipment}
+              onChange={(e) => setShipment(e.target.value)}
+            />
+          </div>
 
-      <div className="form-group">
-        <label>Fecha Inicial</label>
-        <input
-          type="datetime-local"
-          className="form-control"
-          placeholder="Dia/Mes/Año"
-          defaultValue="2022-12-05T00:00"
-        />
-      </div>
+          <div className="form-group">
+            <label>Fecha Inicial</label>
+            <input
+              type="datetime-local"
+              className="form-control"
+              placeholder="Dia/Mes/Año"
+              value={fechaInicial}
+              onChange={(e) => setFechaInicial(e.target.value)}
+            />
+          </div>
 
-      <div className="form-group">
-        <label>Fecha Final</label>
-        <input
-          type="datetime-local"
-          className="form-control"
-          placeholder="Dia/Mes/Año"
-          defaultValue="2022-12-09T00:10"
-        />
-      </div>
+          <div className="form-group">
+            <label>Fecha Final</label>
+            <input
+              type="datetime-local"
+              className="form-control"
+              placeholder="Dia/Mes/Año"
+              value={fechaFinal}
+              onChange={(e) => setFechaFinal(e.target.value)}
+            />
+          </div>
 
-      <button type="submit" className="btn btn-lg btn-block submit">
-        Realizar consulta
-      </button>
-    </form>
+          <button type="submit" className="btn btn-lg btn-block submit">
+            Realizar consulta
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 
