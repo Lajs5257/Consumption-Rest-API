@@ -1,0 +1,45 @@
+.search {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "title"
+        "search"
+        "search"
+        "search"
+        "search"
+        "submit";
+    grid-gap: 1rem;
+    margin: 3rem auto;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 768px) {
+    .search {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+            "title title"
+            "search search"
+            "search search"
+            "submit submit";
+    }
+}
+.title {
+    grid-area: title;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #003eaa;
+}
+.submit {
+    grid-area: submit;
+    justify-self: center;
+    color: var(--color-principal);
+    background-color: var(--color-terciario);
+}
