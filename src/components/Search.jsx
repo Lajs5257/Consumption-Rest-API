@@ -1,34 +1,36 @@
-import '../styles/Search.css'
+import "../styles/Search.css";
 const Search = () => {
   return (
     <form className="search">
-      <h3 className='title'>Consultar historial de rastreo</h3>
+      <h3 className="title">Consultar historial de rastreo</h3>
 
       <div className="form-group">
         <label>Token</label>
-        <input type="text" className="form-control" placeholder="First name" />
+        <input type="text" className="form-control" placeholder="Token" />
       </div>
 
       <div className="form-group">
-        <label></label>
-        <input type="text" className="form-control" placeholder="Last name" />
+        <label>Shipment</label>
+        <input type="text" className="form-control" placeholder="Shipment" />
       </div>
 
       <div className="form-group">
-        <label>Email</label>
+        <label>Fecha Inicial</label>
         <input
-          type="email"
+          type="datetime-local"
           className="form-control"
-          placeholder="Enter email"
+          placeholder="Dia/Mes/Año"
+          defaultValue="2022-12-05T00:00"
         />
       </div>
 
       <div className="form-group">
-        <label>Password</label>
+        <label>Fecha Final</label>
         <input
-          type="password"
+          type="datetime-local"
           className="form-control"
-          placeholder="Enter password"
+          placeholder="Dia/Mes/Año"
+          defaultValue="2022-12-09T00:10"
         />
       </div>
 
