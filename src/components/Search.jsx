@@ -2,10 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import Alerta from "./Alerta";
 import clienteAxios from "../config/clienteAxios";
+import useData from "../hooks/useData";
 
 import "../styles/Search.css";
 const Search = () => {
   const [alerta, setAlerta] = useState({});
+  
+  const setData = useData();
 
   const [token, setToken] = useState(import.meta.env.VITE_TOKEN);
   const [shipment, setShipment] = useState(import.meta.env.VITE_SHIPMENT);
@@ -27,71 +30,49 @@ const Search = () => {
     try {
       const options = {
         method: "POST",
-        body: `{"token":${token},
-        "fh_start":${fechaInicial},
-        "fh_end":${fechaFinal}},
-        "shipment":${shipment}}`,
+        body:
+          '{"token":"' +
+          token +
+          '","fh_start":"' +
+          fechaInicial +
+          '","fh_end":"' +
+          fechaFinal +
+          '","shipment":"' +
+          shipment +
+          '"}',
       };
 
       const data = fetch(
-        import.meta.env.VITE_BACKEND_URL+"/jsonapi/get_tracking_info_rest_service_std_test",
+        import.meta.env.VITE_BACKEND_URL +
+          "/jsonapi/get_tracking_info_rest_service_std_test",
         options
       )
         .then((response) => response.json())
         .then((response) => console.log(response))
-        .catch((err) => console.error(err));
-      /* code dont work by the cors policy
-      const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        url: '',
-        data: {
-          token: '',
-          fh_start: '',
-          fh_end: '',
-          shipment: ''
-        }
-      };
-      
-      axios.request(options).then(function (response) {
-        console.log(response.data);
-      }).catch(function (error) {
-        console.error(error);
-      });*/
+        .catch((err) => {
+          console.log(error);
+          setAlerta({
+            msg: error.response.data,
+            error: true,
+          });
+        });
 
-      /*const { data } = clienteAxios.post(
-        "/get_tracking_info_rest_service_std_test",
-        {
-          token:
-            token,
-          fh_start: fechaInicial,
-          fh_end: fechaFinal,
-          shipment: shipment,
-        }
-      ).then(response => {
-        console.log('successful signup')
-        console.log(response);
- 
-  }).catch(error => {
-        console.log('Sign up server error: ')
-        console.log(error);
-  });*/
-      console.log(data);
-      setAlerta({});
-      
-      localStorage.setItem("data", JSON.stringify(data));
-      //setAuth(data)
-      //navigate("/dashboard");
+      if (data) {
+        setAlerta({});
+
+        localStorage.setItem("data", JSON.stringify(data));
+        setData(data);        
+        //navigate("/dashboard");
+      }
     } catch (error) {
       console.log(error);
       setAlerta({
-        msg: error.response.data,
+        msg: error,
         error: true,
       });
     }
   };
   const { msg } = alerta;
-  console.log(msg);
   return (
     <>
       <form onSubmit={handleSubmit}>
