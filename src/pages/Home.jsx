@@ -8,7 +8,7 @@ function Carousel() {
     <React.Fragment>      
       <div className='vid'>
         <video loop autoPlay muted>
-          <source src="../../public/RC-banner3-3.mp4" type="video/mp4" />
+          <source src="./RC-banner3-3.mp4" type="video/mp4" />
           </video>
         </div>
     </React.Fragment>

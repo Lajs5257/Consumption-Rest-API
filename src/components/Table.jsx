@@ -14,56 +14,60 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Spinner } from "react-bootstrap";
+import useData from "../hooks/useData";
 
-/*supply_chain_id: number;
-  id: number;
-  plante: string;
-  shipment: string;
-  transline_name: string;
-  transline_id: number;
-  legacy_code: number;
-  timezone: string;
-  latitude: number;
-  longitude: number;
-  speed: number;
-  distance_to_route?: any;
-  distance_to_end_route?: any;
-  odometer: string;
-  code: string;
-  altitude: string;
-  ignition?: any;
-  batery?: any;
-  course: string;*/
-function createData(name, calories, fat, carbs, protein, price) {
+function createData(
+  supply_chain_id,
+  id,
+  plante,
+  shipment,
+  transline_name,
+  transline_id,
+  legacy_code,
+  timezone,
+  latitude,
+  longitude,
+  speed,
+  distance_to_route,
+  distance_to_end_route,
+  odometer,
+  code,
+  altitude,
+  ignition,
+  batery,
+  course
+) {
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
+    supply_chain_id,
+    id,
+    plante,
+    shipment,
+    details: [
+      transline_name,
+      transline_id,
+      legacy_code,
+      timezone,
+      latitude,
+      longitude,
+      speed,
+      distance_to_route,
+      distance_to_end_route,
+      odometer,
+      code,
+      altitude,
+      ignition,
+      batery,
+      course,
     ],
   };
 }
-
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
     <React.Fragment>
-      
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
@@ -75,42 +79,59 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.supply_chain_id}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.id}</TableCell>
+        <TableCell align="right">{row.plante}</TableCell>
+        <TableCell align="right">{row.shipment}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Detalles
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Transline name</TableCell>
+                    <TableCell>Transline id</TableCell>
+                    <TableCell>Legacy code</TableCell>
+                    <TableCell>Timezone</TableCell>
+                    <TableCell>Latitude</TableCell>
+                    <TableCell>Longitude</TableCell>
+                    <TableCell>Speed</TableCell>
+                    <TableCell>Distance to route</TableCell>
+                    <TableCell>Distance to end route</TableCell>
+                    <TableCell>Odometer</TableCell>
+                    <TableCell>Code</TableCell>
+                    <TableCell>Altitude</TableCell>
+                    <TableCell>Ignition</TableCell>
+                    <TableCell>Batery</TableCell>
+                    <TableCell>Course</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                    <TableRow key={row.supply_chain_id}>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {row.transline_name}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
+                      <TableCell>{row.transline_id}</TableCell>
+                      <TableCell>{row.legacy_code}</TableCell>
+                      <TableCell>{row.timezone}</TableCell>
+                      <TableCell>{row.latitude}</TableCell>
+                      <TableCell>{row.longitude}</TableCell>
+                      <TableCell>{row.speed}</TableCell>
+                      <TableCell>{row.distance_to_route}</TableCell>
+                      <TableCell>{row.distance_to_end_route}</TableCell>
+                      <TableCell>{row.odometer}</TableCell>
+                      <TableCell>{row.code}</TableCell>
+                      <TableCell>{row.altitude}</TableCell>
+                      <TableCell>{row.ignition}</TableCell>
+                      <TableCell>{row.batery}</TableCell>
+                      <TableCell>{row.course}</TableCell>
                     </TableRow>
-                  ))}
                 </TableBody>
               </Table>
             </Box>
@@ -120,59 +141,35 @@ function Row(props) {
     </React.Fragment>
   );
 }
-
+/*
 Row.propTypes = {
   row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
+    supply_chain_id: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    plante: PropTypes.string.isRequired,
+    shipment: PropTypes.string.isRequired,
+    details: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        transline_name: PropTypes.string.isRequired,
+        transline_id: PropTypes.number.isRequired,
+        legacy_code: PropTypes.number.isRequired,
+        timezone: PropTypes.string.isRequired,
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+        speed: PropTypes.number.isRequired,
+        distance_to_route: PropTypes.string,
+        distance_to_end_route: PropTypes.string,
+        odometer: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+        altitude: PropTypes.string.isRequired,
+        ignition: PropTypes.string,
+        batery: PropTypes.string,
+        course: PropTypes.string.isRequired,
       })
     ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
   }).isRequired,
 };
-// creamos un arreglo de 120 datos
-const rows = [
-  createData("1", 159, 6.0, 24, 4.0, 3.99),
-  createData("2", 237, 9.0, 37, 4.3, 4.99),
-  createData("3", 262, 16.0, 24, 6.0, 3.79),
-  createData("4", 305, 3.7, 67, 4.3, 2.5),
-  createData("5", 356, 16.0, 49, 3.9, 0.99),
-  createData("6", 356, 16.0, 49, 3.9, 0.99),
-  createData("7", 356, 16.0, 49, 3.9, 0.99),
-  createData("8", 356, 16.0, 49, 3.9, 0.99),
-  createData("9", 356, 16.0, 49, 3.9, 0.99),
-  createData("10", 356, 16.0, 49, 3.9, 0.99),
-  createData("11", 356, 16.0, 49, 3.9, 0.99),
-  createData("12", 356, 16.0, 49, 3.9, 0.99),
-  createData("13", 356, 16.0, 49, 3.9, 0.99),
-  createData("14", 356, 16.0, 49, 3.9, 0.99),
-  createData("15", 356, 16.0, 49, 3.9, 0.99),
-  createData("16", 356, 16.0, 49, 3.9, 0.99),
-  createData("17", 356, 16.0, 49, 3.9, 0.99),
-  createData("18", 356, 16.0, 49, 3.9, 0.99),
-  createData("19", 356, 16.0, 49, 3.9, 0.99),
-  createData("20", 356, 16.0, 49, 3.9, 0.99),
-  createData("21", 356, 16.0, 49, 3.9, 0.99),
-  createData("22", 356, 16.0, 49, 3.9, 0.99),
-  createData("23", 356, 16.0, 49, 3.9, 0.99),
-  createData("24", 356, 16.0, 49, 3.9, 0.99),
-  createData("25", 356, 16.0, 49, 3.9, 0.99),
-  createData("26", 356, 16.0, 49, 3.9, 0.99),
-  createData("27", 356, 16.0, 49, 3.9, 0.99),
-  createData("28", 356, 16.0, 49, 3.9, 0.99),
-  createData("29", 356, 16.0, 49, 3.9, 0.99),
-  createData("30", 356, 16.0, 49, 3.9, 0.99),
-  createData("31", 356, 16.0, 49, 3.9, 0.99),
-];
-
+*/
 function Tabla() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -185,44 +182,45 @@ function Tabla() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const data =null;
+  const { data } = useData();
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      {data &&
-      <div>
-
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right">Protein&nbsp;(g)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return <Row key={row.name} row={row} />;
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
-      }
+      { typeof  data.length=== 'undefined' ? (
+        <div> </div>
+      ) : (
+        <>
+          <h1>Datos de trackeo resultantes</h1>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table aria-label="collapsible table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>Supply chain id</TableCell>
+                  <TableCell>Id</TableCell>
+                  <TableCell>Plante</TableCell>
+                  <TableCell>Shipment</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{
+                data
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return <Row key={row.id} row={row} />;
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
+      )}
     </Paper>
   );
 }

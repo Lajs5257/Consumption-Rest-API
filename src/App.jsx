@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import './App.css'
-import Home from './pages/Home'
+import { useState } from "react";
+import "./App.css";
+import { DataProvider } from "./context/DataProvider";
+import Home from "./pages/Home";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-  
   return (
     <div className="App">
-      
-      <Home/>
+      <DataProvider>
+        <Home />
+      </DataProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

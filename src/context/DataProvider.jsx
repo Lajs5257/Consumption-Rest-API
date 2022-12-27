@@ -10,7 +10,9 @@ const DataProvider = ({children}) => {
     useEffect(() => {
         const cargarData = async () => {
             try {
+                console.log('holis');
                 if(localStorage.getItem('data')) {
+                    console.log('cargando data de localstorage');
                     setData(JSON.parse(localStorage.getItem('data')))
                 }
             } catch (error) {

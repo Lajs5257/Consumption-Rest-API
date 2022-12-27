@@ -8,7 +8,7 @@ import "../styles/Search.css";
 const Search = () => {
   const [alerta, setAlerta] = useState({});
   
-  const setData = useData();
+  const {setData} = useData()
 
   const [token, setToken] = useState(import.meta.env.VITE_TOKEN);
   const [shipment, setShipment] = useState(import.meta.env.VITE_SHIPMENT);
@@ -42,13 +42,12 @@ const Search = () => {
           '"}',
       };
 
-      const data = fetch(
+      const data = await fetch(
         import.meta.env.VITE_BACKEND_URL +
           "/jsonapi/get_tracking_info_rest_service_std_test",
         options
       )
         .then((response) => response.json())
-        .then((response) => console.log(response))
         .catch((err) => {
           console.log(error);
           setAlerta({
@@ -56,13 +55,23 @@ const Search = () => {
             error: true,
           });
         });
-
-      if (data) {
+        //let result = await data.json(); // read body as json
+        //console.log(result)
+      if (data != {}) {
         setAlerta({});
+        console.log(data);
+        console.log('sdf');
+        const hola = data.map((item,index) => {
+          return {
+            id: item.id,
+            index: index,
+          };
+        });
 
-        localStorage.setItem("data", JSON.stringify(data));
+        console.log(hola);
+        console.log('guardando data en localstorage');
+        localStorage.setItem("data", JSON.stringifyj(data));
         setData(data);        
-        //navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
