@@ -59,18 +59,10 @@ const Search = () => {
         //console.log(result)
       if (data != {}) {
         setAlerta({});
-        console.log(data);
-        console.log('sdf');
-        const hola = data.map((item,index) => {
-          return {
-            id: item.id,
-            index: index,
-          };
-        });
-
-        console.log(hola);
+        //console.log(data);
+        const datos = JSON.stringify(data);
         console.log('guardando data en localstorage');
-        localStorage.setItem("data", JSON.stringifyj(data));
+        localStorage.setItem("data", datos);
         setData(data);        
       }
     } catch (error) {

@@ -141,35 +141,6 @@ function Row(props) {
     </React.Fragment>
   );
 }
-/*
-Row.propTypes = {
-  row: PropTypes.shape({
-    supply_chain_id: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    plante: PropTypes.string.isRequired,
-    shipment: PropTypes.string.isRequired,
-    details: PropTypes.arrayOf(
-      PropTypes.shape({
-        transline_name: PropTypes.string.isRequired,
-        transline_id: PropTypes.number.isRequired,
-        legacy_code: PropTypes.number.isRequired,
-        timezone: PropTypes.string.isRequired,
-        latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        speed: PropTypes.number.isRequired,
-        distance_to_route: PropTypes.string,
-        distance_to_end_route: PropTypes.string,
-        odometer: PropTypes.string.isRequired,
-        code: PropTypes.string.isRequired,
-        altitude: PropTypes.string.isRequired,
-        ignition: PropTypes.string,
-        batery: PropTypes.string,
-        course: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
-};
-*/
 function Tabla() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
