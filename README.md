@@ -12,3 +12,5 @@ https://consumption-rest-api.vercel.app/
 ![Preview](./public/image1.png "Preview")
 ![Preview](./public/image2.png "Preview")
 ![Preview](./public/image3.png "Preview")
+### Adaptative design
+![Preview](./public/image4.png "Preview")
