@@ -3,18 +3,16 @@ import axios from "axios";
 import Alerta from "./Alerta";
 import clienteAxios from "../config/clienteAxios";
 import useData from "../hooks/useData";
-
 import "../styles/Search.css";
+
 const Search = () => {
   const [alerta, setAlerta] = useState({});
-  
-  const {setData} = useData()
 
+  const { setData } = useData();
+  // Default values
   const [token, setToken] = useState(import.meta.env.VITE_TOKEN);
   const [shipment, setShipment] = useState(import.meta.env.VITE_SHIPMENT);
-  const [fechaInicial, setFechaInicial] = useState(
-    import.meta.env.VITE_FH_START
-  );
+  const [fechaInicial, setFechaInicial] = useState(import.meta.env.VITE_FH_START);
   const [fechaFinal, setFechaFinal] = useState(import.meta.env.VITE_FH_END);
 
   const handleSubmit = async (e) => {
@@ -55,15 +53,12 @@ const Search = () => {
             error: true,
           });
         });
-        //let result = await data.json(); // read body as json
-        //console.log(result)
       if (data != {}) {
         setAlerta({});
-        //console.log(data);
         const datos = JSON.stringify(data);
-        console.log('guardando data en localstorage');
+        console.log("guardando data en localstorage");
         localStorage.setItem("data", datos);
-        setData(data);        
+        setData(data);
       }
     } catch (error) {
       console.log(error);
